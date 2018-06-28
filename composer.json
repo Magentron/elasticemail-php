@@ -1,17 +1,30 @@
 {
   "name": "rdok/elasticemail-php",
   "description": "Integration to the Elastic Email API http://api.elasticemail.com/public/help",
+    "keywords": [
+        "rdok",
+        "Magentron",
+        "Laravel",
+        "Elastic Email",
+        "ElasticEmail",
+        "email",
+        "PHP"
+    ],
   "license": "MIT",
   "authors": [
     {
       "name": "Rizart Dokollari",
       "email": "r.dokollari@gmail.com"
+    },
+    {
+      "name": "Jeroen Derks",
+      "email": "jeroen@derks.it"
     }
   ],
   "require": {
     "php": ">=7.0.0",
     "guzzlehttp/guzzle": "^6.3",
-    "phpunit/phpunit": "^6.5"
+    "phpunit/phpunit": ">=6.5"
   },
   "require-dev": {
     "vlucas/phpdotenv": "^2.2"

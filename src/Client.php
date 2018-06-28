@@ -1,6 +1,7 @@
 <?php
 /**
  * @author  Rizart Dokollari <r.dokollari@gmail.com>
+ * @author  Jeroen Derks <jeroen@derks.it>
  * @since   12/24/17
  */
 
@@ -34,17 +35,15 @@ class Client extends \GuzzleHttp\Client
     {
         $stack = HandlerStack::create();
 
-        $stack->push(
-            Middleware::mapRequest(
-                function (RequestInterface $request) use ($apikey) {
-                    return $request->withUri(
-                        Uri::withQueryValue(
-                            $request->getUri(), 'apikey', $apikey
-                        )
-                    );
-                }
-            )
-        );
+        $stack->push(Middleware::mapRequest(
+            function (RequestInterface $request) use ($apikey) {
+                return $request->withUri(
+                    Uri::withQueryValue(
+                        $request->getUri(), 'apikey', $apikey
+                    )
+                );
+            }
+        ), 'apikey');
 
         $stack->push(Middleware::mapResponse(
             function (ResponseInterface $response) {
@@ -57,7 +56,7 @@ class Client extends \GuzzleHttp\Client
 
                 return $response;
             }
-        ));
+        ), 'api_error');
 
         foreach ($externalMiddlewares as $middleware) {
             $stack->push($middleware);

@@ -1,6 +1,7 @@
 <?php
 /**
  * @author  Rizart Dokollari <r.dokollari@gmail.com>
+ * @author  Jeroen Derks <jeroen@derks.it>
  * @since   12/24/17
  */
 
@@ -9,10 +10,13 @@ namespace Tests\Email;
 use ElasticEmail\Client;
 use ElasticEmail\ElasticEmail;
 use ElasticEmail\Email\Send;
+use Tests\ClientFake;
 use Tests\TestCase;
 
 class SendTest extends TestCase
 {
+    const DEFAULT_EMAIL = 'hello@example.org';
+
     /** @test */
     public function appends_api_key()
     {
@@ -22,23 +26,38 @@ class SendTest extends TestCase
     /** @test */
     public function send_an_email()
     {
-        $dotenv = new \Dotenv\Dotenv(__DIR__ . '/../../');
+        $baseDirectory = __DIR__ . '/../..';
+
+        $envFilename = '.env';
+        if (!file_exists("{$baseDirectory}/{$envFilename}")) {
+            $envFilename .= '.example';
+        }
+        $dotenv = new \Dotenv\Dotenv($baseDirectory, $envFilename);
 
         $dotenv->load();
 
-        $client = new Client(getenv('ELASTIC_EMAIL_API_KEY'));
+        $apiKey = getenv('ELASTIC_EMAIL_API_KEY') ?: md5(uniqid(mt_rand(), true));
+        if (getenv('TEST_REAL_API', false)) {
+            $client = new Client($apiKey);
+        } else {
+            $client = new ClientFake($apiKey);
+        }
 
         $send = new Send($client);
 
         $response = $send->handle([
-            'to'      => 'r.dokollari@gmail.com',
-            'from'    => 'r.dokollari@gmail.com',
+            'to'      => getenv('MAIL_TO',   self::DEFAULT_EMAIL),
+            'from'    => getenv('MAIL_FROM', self::DEFAULT_EMAIL),
             'subject' => subject(__FUNCTION__),
         ]);
 
+        $this->assertNotEmpty($response->getResponse());
+        $this->assertEquals(200, $response->getStatusCode());
         $this->assertTrue($response->wasSuccessful());
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(null, $response->code());
+        $this->assertEquals(null, $response->context());
+        $this->assertEquals(null, $response->error());
     }
 
     /** @test */

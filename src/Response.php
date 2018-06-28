@@ -1,6 +1,7 @@
 <?php
 /**
  * @author  Rizart Dokollari <r.dokollari@gmail.com>
+ * @author  Jeroen Derks <jeroen@derks.it>
  * @since   12/24/17
  */
 
@@ -19,7 +20,8 @@ abstract class Response
 
     public function context()
     {
-        return $this->getBody()->Context;
+        $body = $this->getBody();
+        return property_exists($body, 'Context') ? $body->Context : null;
     }
 
     public function getBody()
@@ -39,12 +41,13 @@ abstract class Response
 
     public function code()
     {
-        return $this->getBody()->Code;
+        $body = $this->getBody();
+        return property_exists($body, 'Code') ? $body->Code : null;
     }
 
     public function error()
     {
-        return $this->getBody()->error;
+        $body = $this->getBody();
+        return property_exists($body, 'error') ? $body->error : null;
     }
-
 }
