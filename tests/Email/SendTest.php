@@ -58,6 +58,10 @@ class SendTest extends TestCase
         $this->assertEquals(null, $response->code());
         $this->assertEquals(null, $response->context());
         $this->assertEquals(null, $response->error());
+
+        $this->assertNotEmpty($response->data());
+        $this->assertNotEmpty($response->messageId());
+        $this->assertNotEmpty($response->transactionId());
     }
 
     /** @test */
