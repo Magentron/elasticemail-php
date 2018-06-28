@@ -32,9 +32,8 @@ class ClientFake extends Client
 
         $stack->after('api_error', Middleware::mapResponse(
             function (ResponseInterface $response) {
-
                 $body = json_decode((string)$response->getBody(), true);
-                if ( ! $body['success']) {
+                if (! $body['success']) {
                     $response = $this->buildResponseFake($response);
                 }
 

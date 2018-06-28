@@ -46,7 +46,7 @@ class SendTest extends TestCase
         $send = new Send($client);
 
         $response = $send->handle([
-            'to'      => getenv('MAIL_TO',   self::DEFAULT_EMAIL),
+            'to'      => getenv('MAIL_TO', self::DEFAULT_EMAIL),
             'from'    => getenv('MAIL_FROM', self::DEFAULT_EMAIL),
             'subject' => subject(__FUNCTION__),
         ]);
