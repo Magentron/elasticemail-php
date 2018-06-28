@@ -31,7 +31,7 @@
   },
   "autoload": {
     "psr-4": {
-      "ElasticEmail\\": "src/ElasticEmail/"
+      "ElasticEmail\\": "src/"
     }
   },
   "autoload-dev": {

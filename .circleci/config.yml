@@ -42,8 +42,8 @@ jobs:
             - vendor
 
       # run tests with phpunit or codecept
-      - run: ./vendor/bin/phpunit
+      - run: ./vendor/bin/phpunit --coverage-html=build/covarage --coverage-clover=build/logs/clover.xml
       - store_test_results:
-          path: tests/_output
+          path: build
       - store_artifacts:
-          path: tests/_output
+          path: build
