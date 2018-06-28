@@ -1,5 +1,5 @@
 {
-  "name": "rdok/elasticemail-php",
+  "name": "magentron/elasticemail-php",
   "description": "Integration to the Elastic Email API http://api.elasticemail.com/public/help",
     "keywords": [
         "rdok",
@@ -24,7 +24,7 @@
   "require": {
     "php": ">=7.0.0",
     "guzzlehttp/guzzle": "^6.3",
-    "phpunit/phpunit": ">=6.5"
+    "phpunit/phpunit": "^6.5|7"
   },
   "require-dev": {
     "vlucas/phpdotenv": "^2.2"
