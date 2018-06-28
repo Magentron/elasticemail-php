@@ -13,7 +13,6 @@ use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-
 /** HTTP client: sets correct base URI & api key and other middlewares. */
 class Client extends \GuzzleHttp\Client
 {
@@ -47,10 +46,9 @@ class Client extends \GuzzleHttp\Client
 
         $stack->push(Middleware::mapResponse(
             function (ResponseInterface $response) {
-
                 $body = json_decode((string)$response->getBody(), true);
 
-                if ( ! $body['success']) {
+                if (! $body['success']) {
                     throw new ElasticEmailException($body['error']);
                 }
 

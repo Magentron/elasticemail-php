@@ -6,7 +6,6 @@
 
 namespace ElasticEmail\ElasticEmail;
 
-
 interface ClientInterface
 {
     /** @return ClientInterface */
